@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{ $pages := .Pages.ByDate.Reverse }}
+  {{ partial "page-hero.html" (dict
+    "title" .Title
+    "kicker" (i18n "taxonomy_kicker")
+    "text" (i18n "taxonomy_text")
+    "actions" (slice (dict "class" "button-primary" "href" site.Home.Permalink "label" (i18n "back_home")))
+  ) }}
+
+  <section class="section">
+    <div class="post-grid">
+      {{ range $pages }}
+        {{ partial "post-card.html" . }}
+      {{ else }}
+        <p class="empty-state">{{ i18n "empty_posts" }}</p>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ partial "knowledge-graph.html" (dict "page" . "compact" true) }}
+{{ end }}

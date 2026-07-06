@@ -1,0 +1,11 @@
+{{- $src := . | default "" -}}
+{{- $result := "" -}}
+{{- if $src -}}
+  {{- $url := urls.Parse $src -}}
+  {{- if $url.IsAbs -}}
+    {{- $result = $src -}}
+  {{- else -}}
+    {{- $result = (replaceRE "^/" "" $src) | absLangURL -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

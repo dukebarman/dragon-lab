@@ -1,0 +1,23 @@
+<article class="post-row">
+  <h3><a class="post-link" href="{{ .Permalink }}">{{ .Title }}</a></h3>
+  <p class="meta-line">
+    {{ upper .Lang }} /
+    <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date | time.Format ":date_long" }}</time>
+  </p>
+  <p>
+    {{ with .Description }}
+      {{ . }}
+    {{ else }}
+      {{ .Plain | htmlUnescape | truncate 180 }}
+    {{ end }}
+  </p>
+  {{ with .Params.tags }}
+    <ul class="tag-row">
+      {{ range first 4 . }}
+        <li>
+          <a href="{{ (printf `tags/%s/` (. | urlize)) | absLangURL }}">{{ . }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</article>

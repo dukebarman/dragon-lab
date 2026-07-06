@@ -1,0 +1,7 @@
+{{- if hugo.IsProduction -}}
+  {{- $analytics := site.Params.analytics | default dict -}}
+  {{- with $analytics.yandex -}}
+    {{- $yandexID := printf "%v" . -}}
+    <noscript><div><img src="https://mc.yandex.ru/watch/{{ $yandexID | urlquery }}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  {{- end }}
+{{- end -}}

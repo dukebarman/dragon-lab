@@ -1,0 +1,25 @@
+{{ $homeTranslations := site.Home.AllTranslations }}
+{{ if gt (len $homeTranslations) 1 }}
+  <nav class="lang-toggle" aria-label="{{ i18n "language_switcher" }}">
+    {{ range $homeTranslations }}
+      {{ $lang := .Lang }}
+      {{ $target := first 1 (where $.AllTranslations "Lang" $lang) }}
+      {{ if and (not $.IsHome) (eq (len $target) 0) }}
+        {{ $target = first 1 (where $homeTranslations "Lang" $lang) }}
+      {{ end }}
+      {{ if and $.IsHome (eq (len $target) 0) }}
+        {{ $target = first 1 (where $homeTranslations "Lang" $lang) }}
+      {{ end }}
+      {{ with $target }}
+        {{ $page := index . 0 }}
+        <a
+          href="{{ $page.Permalink }}"
+          class="lang-link {{ if eq $page.Lang $.Site.Language.Lang }}is-active{{ end }}"
+          hreflang="{{ $page.Lang }}"
+          {{ if eq $page.Lang $.Site.Language.Lang }}aria-current="true"{{ end }}>
+          {{ upper $page.Lang }}
+        </a>
+      {{ end }}
+    {{ end }}
+  </nav>
+{{ end }}

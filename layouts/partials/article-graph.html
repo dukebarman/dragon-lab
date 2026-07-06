@@ -1,0 +1,102 @@
+{{ $page := .page }}
+{{ $related := .related | default (slice) }}
+{{ $localTags := first 3 ($page.GetTerms "tags") }}
+{{ $relatedPosts := first 3 $related }}
+{{ $currentID := printf "article-post-%s" ($page.File.ContentBaseName | urlize) }}
+{{ $currentCoord := dict "cx" 142 "cy" 64 "tx" 142 "ty" 42 "anchor" "middle" }}
+{{ $relatedCoords := slice
+  (dict "cx" 56 "cy" 132 "tx" 56 "ty" 156 "anchor" "middle")
+  (dict "cx" 228 "cy" 132 "tx" 228 "ty" 156 "anchor" "middle")
+  (dict "cx" 142 "cy" 214 "tx" 142 "ty" 238 "anchor" "middle")
+}}
+{{ $tagCoords := slice
+  (dict "cx" 40 "cy" 44 "tx" 40 "ty" 24 "anchor" "middle")
+  (dict "cx" 244 "cy" 44 "tx" 244 "ty" 24 "anchor" "middle")
+  (dict "cx" 244 "cy" 226 "tx" 244 "ty" 250 "anchor" "middle")
+}}
+
+{{ if gt (add (len $relatedPosts) (len $localTags)) 0 }}
+  <section class="rail-card local-graph-card" data-iv-remove="true">
+    <div class="local-graph-head">
+      <p class="section-kicker">{{ i18n "article_graph_kicker" }}</p>
+    </div>
+
+    <div class="cybergraph-map local-graph-map" data-cybergraph>
+      <div class="cybergraph-tooltip" data-cybergraph-tooltip hidden></div>
+      <svg viewBox="0 0 284 268" class="cybergraph-svg local-graph-svg" role="img" aria-label="{{ i18n "article_graph_aria" }}">
+        {{ range $i, $post := $relatedPosts }}
+          {{ $coord := index $relatedCoords $i }}
+          {{ $postID := printf "article-post-%s" ($post.File.ContentBaseName | urlize) }}
+          <path
+            class="cybergraph-edge cybergraph-edge-posts"
+            d="M{{ index $currentCoord `cx` }} {{ index $currentCoord `cy` }} L{{ index $coord `cx` }} {{ index $coord `cy` }}"
+            data-edge-from="{{ $currentID }}"
+            data-edge-to="{{ $postID }}"></path>
+        {{ end }}
+
+        {{ range $i, $tag := $localTags }}
+          {{ $coord := index $tagCoords $i }}
+          {{ $tagID := printf "article-tag-%s" ($tag.Title | urlize) }}
+          <path
+            class="cybergraph-edge"
+            d="M{{ index $currentCoord `cx` }} {{ index $currentCoord `cy` }} L{{ index $coord `cx` }} {{ index $coord `cy` }}"
+            data-edge-from="{{ $currentID }}"
+            data-edge-to="{{ $tagID }}"></path>
+
+          {{ range $j, $post := $relatedPosts }}
+            {{ if in ($post.Params.tags | default (slice)) $tag.Title }}
+              {{ $postCoord := index $relatedCoords $j }}
+              <path
+                class="cybergraph-edge"
+                d="M{{ index $coord `cx` }} {{ index $coord `cy` }} L{{ index $postCoord `cx` }} {{ index $postCoord `cy` }}"
+                data-edge-from="{{ $tagID }}"
+                data-edge-to="article-post-{{ $post.File.ContentBaseName | urlize }}"></path>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+
+        <a
+          href="{{ $page.Permalink }}"
+          class="cybergraph-link cybergraph-post active"
+          aria-label="{{ $page.Title }}"
+          data-node-id="{{ $currentID }}"
+          data-tooltip="{{ $page.Title }}">
+          <title>{{ $page.Title }}</title>
+          <circle cx="{{ index $currentCoord `cx` }}" cy="{{ index $currentCoord `cy` }}" r="11" />
+          <text x="{{ index $currentCoord `tx` }}" y="{{ index $currentCoord `ty` }}" text-anchor="{{ index $currentCoord `anchor` }}">{{ $page.Title | truncate 18 }}</text>
+        </a>
+
+        {{ range $i, $post := $relatedPosts }}
+          {{ $coord := index $relatedCoords $i }}
+          {{ $postID := printf "article-post-%s" ($post.File.ContentBaseName | urlize) }}
+          <a
+            href="{{ $post.Permalink }}"
+            class="cybergraph-link cybergraph-post cybergraph-post-only"
+            aria-label="{{ $post.Title }}"
+            data-node-id="{{ $postID }}"
+            data-tooltip="{{ $post.Title }}">
+            <title>{{ $post.Title }}</title>
+            <circle cx="{{ index $coord `cx` }}" cy="{{ index $coord `cy` }}" r="8" />
+            <text x="{{ index $coord `tx` }}" y="{{ index $coord `ty` }}" text-anchor="{{ index $coord `anchor` }}">{{ $post.Title | truncate 16 }}</text>
+          </a>
+        {{ end }}
+
+        {{ range $i, $tag := $localTags }}
+          {{ $coord := index $tagCoords $i }}
+          {{ $tagID := printf "article-tag-%s" ($tag.Title | urlize) }}
+          <a
+            href="{{ $tag.Permalink }}"
+            class="cybergraph-link cybergraph-tag"
+            aria-label="{{ $tag.Title }}"
+            data-node-id="{{ $tagID }}"
+            data-tooltip="{{ $tag.Title }}">
+            <title>{{ $tag.Title }}</title>
+            <circle cx="{{ index $coord `cx` }}" cy="{{ index $coord `cy` }}" r="7" />
+            <text x="{{ index $coord `tx` }}" y="{{ index $coord `ty` }}" text-anchor="{{ index $coord `anchor` }}">{{ $tag.Title | truncate 14 }}</text>
+          </a>
+        {{ end }}
+      </svg>
+    </div>
+
+  </section>
+{{ end }}

@@ -1,0 +1,41 @@
+{{ $title := .title }}
+{{ $kicker := .kicker }}
+{{ $text := .text }}
+{{ $actions := .actions | default (slice) }}
+{{ $showCaption := .show_caption | default false }}
+{{ $caption1 := .caption_1 }}
+{{ $caption2 := .caption_2 }}
+{{ $heroImage := site.Params.heroImage | default (print "images/" "example-hero.jpg") }}
+{{ $heroImagePath := replaceRE `^/` `` $heroImage }}
+
+<section class="page-hero">
+  <div class="page-hero-copy">
+    {{ with $kicker }}
+      <p class="eyebrow">{{ . }}</p>
+    {{ end }}
+    {{ with $title }}
+      <h1>{{ . }}</h1>
+    {{ end }}
+    {{ with $text }}
+      <p class="hero-text">{{ . }}</p>
+    {{ end }}
+    {{ if gt (len $actions) 0 }}
+      <div class="page-actions">
+        {{ range $actions }}
+          <a class="button {{ .class }}" href="{{ .href }}">{{ .label }}</a>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-frame">
+      <img src="{{ cond hugo.IsServer ($heroImagePath | relURL) ($heroImagePath | absURL) }}" alt="" class="dragon-portrait" />
+    </div>
+    {{ if $showCaption }}
+      <div class="hero-caption">
+        <span>{{ $caption1 }}</span>
+        <span>{{ $caption2 }}</span>
+      </div>
+    {{ end }}
+  </div>
+</section>

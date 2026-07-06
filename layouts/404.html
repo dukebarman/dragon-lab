@@ -1,0 +1,8 @@
+{{ define "main" }}
+  {{ partial "page-hero.html" (dict
+    "title" (i18n "not_found_title")
+    "kicker" "404"
+    "text" (i18n "not_found_text")
+    "actions" (slice (dict "class" "button-primary" "href" site.Home.Permalink "label" (i18n "back_home")))
+  ) }}
+{{ end }}

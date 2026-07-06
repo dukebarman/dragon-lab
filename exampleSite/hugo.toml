@@ -1,0 +1,93 @@
+baseURL = "https://example.com/"
+title = "Dragon Lab Example"
+theme = "dragon-lab"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+locale = "en-US"
+
+[pagination]
+  pagerSize = 6
+
+[services]
+  [services.rss]
+    limit = 10
+
+[permalinks]
+  posts = "posts/:slugorcontentbasename/"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
+
+  [markup.highlight]
+    codeFences = true
+    style = "monokai"
+
+[params]
+  author = "Don Oren Estorsky"
+  description = "A multilingual editorial Hugo theme demo for a dragon researcher and their technical field notes."
+  keywords = "hugo, blog, technology, research, knowledge graph"
+  images = ["images/example-hero.jpg"]
+  heroImage = "images/example-hero.jpg"
+  aboutImage = "images/example-avatar.jpg"
+  themeColor = "#09090c"
+
+  [params.analytics]
+    google = ""
+    yandex = ""
+
+  [params.footer]
+    showCopyright = true
+    showHugoAttribution = true
+    showThemeAttribution = true
+    themeName = "Dragon Lab"
+    themeURL = "https://github.com/dukebarman/dragon-lab"
+    themeAuthorName = "dukeBarman"
+    themeAuthorURL = "https://dukebarman.pro"
+
+[languages]
+  [languages.en]
+    weight = 1
+    contentDir = "content/english"
+    locale = "en-US"
+
+    [languages.en.params]
+      author = "Don Oren Estorsky"
+      brandName = "Dragon Lab"
+      brandTagline = "field notes / curious devices"
+      homeSubtitle = "A fictional research notebook for patient experiments, strange devices, and technical essays that connect one idea to the next."
+
+  [languages.ru]
+    weight = 2
+    contentDir = "content/russian"
+    locale = "ru-RU"
+
+    [languages.ru.params]
+      author = "Дон Орен Эсторский"
+      brandName = "Dragon Lab"
+      brandTagline = "полевые заметки / любопытные устройства"
+      homeSubtitle = "Вымышленный исследовательский блокнот о терпеливых экспериментах, странных устройствах и технических заметках, связанных между собой."
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[menus]
+  [[menus.main]]
+    identifier = "nav_archive"
+    pageRef = "posts"
+    weight = 10
+
+  [[menus.main]]
+    identifier = "nav_about"
+    pageRef = "about"
+    weight = 20
+
+  [[menus.main]]
+    identifier = "nav_tags"
+    pageRef = "tags"
+    weight = 30

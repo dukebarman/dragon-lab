@@ -1,0 +1,308 @@
+[brand_tagline]
+other = "field notes / dragon lab"
+
+[menu_label]
+other = "Меню"
+
+[language_switcher]
+other = "Переключатель языка"
+
+[nav_archive]
+other = "Архив"
+
+[nav_about]
+other = "О драконе"
+
+[nav_tags]
+other = "Теги"
+
+[nav_follow]
+other = "RSS"
+
+[nav_primary]
+other = "Основная навигация"
+
+[skip_to_content]
+other = "К содержанию"
+
+[home_eyebrow]
+other = "Полевые заметки дракона-исследователя"
+
+[home_title_prefix]
+other = "Заметки для тех, кто любит разбираться в"
+
+[home_title_accent]
+other = "устройствах"
+
+[home_title_suffix]
+other = "и находить связи."
+
+[home_title_html]
+other = "Заметки для тех, кто любит разбираться в <span>устройствах</span> и находить связи."
+
+[home_text]
+other = "Вымышленный дракон-исследователь пишет о терпеливых экспериментах, старых приборах и маленьких технических признаках, которые объясняют устройство вещей."
+
+[home_cta_archive]
+other = "Открыть архив"
+
+[home_cta_about]
+other = "О драконе"
+
+[home_caption_1]
+other = "сигнал дракона"
+
+[home_caption_2]
+other = "архив в сети"
+
+[archive_kicker]
+other = "Архив"
+
+[archive_title]
+other = "Последние полевые заметки"
+
+[archive_text]
+other = "Лонгриды и заметки в одном потоке, но с достаточно ясной структурой, чтобы это ощущалось исследовательским блокнотом, а не лентой."
+
+[archive_browse]
+other = "В архив"
+
+[empty_posts]
+other = "В этом разделе пока нет опубликованных материалов."
+
+[author_kicker]
+other = "О драконе"
+
+[author_title]
+other = "Исследовательские заметки дракона, который разбирает технологии по одному аккуратному признаку за раз."
+
+[author_fallback]
+other = "Это место, где технические статьи, связанные заметки и любопытные эксперименты собираются в одном архиве."
+
+[focus_kicker]
+other = "Фокус"
+
+[focus_title]
+other = "Области работы"
+
+[focus_item_1]
+other = "Терпеливые эксперименты с устройствами, протоколами и небольшими приборами"
+
+[focus_item_2]
+other = "Понятные карты того, как один компонент разговаривает с другим"
+
+[focus_item_3]
+other = "Технические заметки, которые превращают неясное поведение в полезные наблюдения"
+
+[empty_tags]
+other = "Теги пока отсутствуют."
+
+[graph_kicker]
+other = "Граф знаний"
+
+[graph_text]
+other = "Карта архива: переключай режимы и переходи по тегам или прямым связям между материалами."
+
+[graph_aria]
+other = "Интерактивный граф знаний со ссылками на теги и статьи архива"
+
+[graph_modes_aria]
+other = "Режимы графа знаний"
+
+[graph_mode_tags]
+other = "Теги + статьи"
+
+[graph_mode_posts]
+other = "Только статьи"
+
+[graph_posts_aria]
+other = "Граф внутренних ссылок между статьями архива"
+
+[article_graph_kicker]
+other = "Граф"
+
+[article_graph_aria]
+other = "Локальный граф текущей статьи"
+
+[article_graph_legend_1]
+other = "текущая статья"
+
+[article_graph_legend_2]
+other = "связанная статья"
+
+[article_graph_legend_3]
+other = "тег"
+
+[article_rail_hide]
+other = "Скрыть справа"
+
+[article_rail_show]
+other = "Показать справа"
+
+[follow_kicker]
+other = "Следить"
+
+[follow_title]
+other = "Прочитай лонгрид, а потом держи архив рядом."
+
+[follow_text]
+other = "Подпишись по RSS или используй публичные профили, если нужен быстрый путь обратно в архив."
+
+[follow_rss]
+other = "Подписаться по RSS"
+
+[follow_social]
+other = "Открыть профиль"
+
+[list_fallback]
+other = "Прямой обзор опубликованного архива на текущем языке."
+
+[list_caption_1]
+other = "сортировка по дате"
+
+[list_caption_2]
+other = "архив с учетом языка"
+
+[back_home]
+other = "На главную"
+
+[post_kicker]
+other = "Статья"
+
+[related_kicker]
+other = "Соседние узлы"
+
+[related_title]
+other = "Еще из архива"
+
+[share_aria]
+other = "Кнопки шаринга статьи в соцсетях и по почте"
+
+[share_prompt]
+other = "Поделиться постом:"
+
+[share_x]
+other = "Поделиться в X"
+
+[share_bluesky]
+other = "Поделиться в Bluesky"
+
+[share_vk]
+other = "Поделиться во ВКонтакте"
+
+[share_linkedin]
+other = "Поделиться в LinkedIn"
+
+[share_reddit]
+other = "Поделиться в Reddit"
+
+[share_telegram]
+other = "Поделиться в Telegram"
+
+[share_mastodon]
+other = "Поделиться в Mastodon"
+
+[share_hn]
+other = "Поделиться в Hacker News"
+
+[share_email]
+other = "Отправить по почте"
+
+[back_to_top]
+other = "К началу"
+
+[post_meta_title]
+other = "Метаданные"
+
+[meta_author]
+other = "Автор"
+
+[meta_published]
+other = "Опубликовано"
+
+[meta_reading]
+other = "Время чтения"
+
+[meta_language]
+other = "Язык"
+
+[minutes_short]
+other = "мин"
+
+[toc_title]
+other = "На этой странице"
+
+[taxonomy_kicker]
+other = "Таксономия"
+
+[taxonomy_text]
+other = "Материалы, связанные одной тематической веткой."
+
+[terms_text]
+other = "Навигационная карта тем архива."
+
+[entries_label]
+other = "материалов"
+
+[about_kicker]
+other = "О драконе"
+
+[about_fallback]
+other = "Исследования технологий, системное мышление и тексты, к которым хочется возвращаться."
+
+[about_role]
+other = "Вымышленный дракон-исследователь и хранитель практических заметок"
+
+[about_intro_kicker]
+other = "Введение"
+
+[about_intro_title]
+other = "Дон Орен изучает странные устройства и объясняет сложные вещи понятным языком."
+
+[about_intro_p1]
+other = "Дон Орен Эсторский — вымышленный дракон-исследователь, который держит теплую лампу, загруженный рабочий стол и привычку записывать каждый полезный признак до того, как он потеряется."
+
+[about_intro_p2]
+other = "Архив следует за приборами, протоколами, интерфейсами и небольшими проектными решениями, из-за которых технологии становятся понятными или загадочными."
+
+[about_intro_p3]
+other = "Каждая заметка написана так, чтобы к ней можно было вернуться: немного лабораторный журнал, немного карта и немного напоминание, что терпеливое наблюдение часто сильнее громкого инструмента."
+
+[about_focus_text]
+other = "В демонстрационном архиве Дон Орен чаще всего занимается такими направлениями:"
+
+[about_archive_kicker]
+other = "Архив"
+
+[about_archive_title]
+other = "Эта демо-тема устроена как рабочий блокнот, а не как лента случайных заметок."
+
+[about_archive_p1]
+other = "Здесь собраны длинные разборы, наблюдения и технические наброски вокруг вымышленных исследовательских проектов. Архив задуман так, чтобы к материалам можно было возвращаться и связывать их между собой."
+
+[about_archive_p2]
+other = "Если ближе маршрут через темы, используй теги и графы. Если нужен линейный вход, начни с последних заметок ниже."
+
+[recent_work_kicker]
+other = "Новые посты в архиве"
+
+[footer_rights]
+other = "Все права защищены."
+
+[footer_published_with]
+other = "Работает на"
+
+[footer_theme]
+other = "Тема"
+
+[footer_by]
+other = "от"
+
+[footer_theme_attribution]
+other = "Тема {{ .theme }} от {{ .author }}."
+
+[not_found_title]
+other = "Эта страница ушла с карты."
+
+[not_found_text]
+other = "Ссылка устарела или маршрут изменился. Вернись в архив и продолжи оттуда."

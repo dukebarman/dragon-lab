@@ -1,0 +1,14 @@
+.DS_Store
+._*
+
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+exampleSite/public/
+exampleSite/resources/_gen/
+exampleSite/.hugo_build.lock
+
+__pycache__/
+*.py[cod]

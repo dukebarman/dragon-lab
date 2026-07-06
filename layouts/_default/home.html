@@ -1,0 +1,65 @@
+{{ define "main" }}
+  {{ $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ $aboutPage := site.GetPage "/about" }}
+  {{ $heroImage := site.Params.heroImage | default (print "images/" "example-hero.jpg") }}
+  {{ $heroImagePath := replaceRE `^/` `` $heroImage }}
+
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ i18n "home_eyebrow" }}</p>
+      <h1>
+        {{ with i18n "home_title_html" }}
+          {{ . | safeHTML }}
+        {{ else }}
+          {{ i18n "home_title_prefix" }}
+          <span>{{ i18n "home_title_accent" }}</span>
+          {{ i18n "home_title_suffix" }}
+        {{ end }}
+      </h1>
+      <p class="hero-text">{{ with site.Params.homeSubtitle }}{{ . }}{{ else }}{{ i18n "home_text" }}{{ end }}</p>
+      <div class="hero-actions">
+        <a
+          class="button button-primary"
+          href="{{ with site.GetPage `section` `posts` }}{{ .Permalink }}{{ else }}{{ `posts/` | absLangURL }}{{ end }}">
+          {{ i18n "home_cta_archive" }}
+        </a>
+        <a
+          class="button button-secondary"
+          href="{{ with $aboutPage }}{{ .Permalink }}{{ else }}{{ `about/` | absLangURL }}{{ end }}">
+          {{ i18n "home_cta_about" }}
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-frame">
+        <img src="{{ cond hugo.IsServer ($heroImagePath | relURL) ($heroImagePath | absURL) }}" alt="" class="dragon-portrait" />
+      </div>
+      <div class="hero-caption">
+        <span>{{ i18n "home_caption_1" }}</span>
+        <span>{{ i18n "home_caption_2" }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="archive-heading">
+      <div>
+        <p class="section-kicker">{{ i18n "archive_title" }}</p>
+      </div>
+      <a
+        class="archive-heading-link"
+        href="{{ with site.GetPage `section` `posts` }}{{ .Permalink }}{{ else }}{{ `posts/` | absLangURL }}{{ end }}">
+        {{ i18n "archive_browse" }}
+      </a>
+    </div>
+    <div class="post-grid post-grid-home">
+      {{ range first 3 $posts }}
+        {{ partial "post-card.html" . }}
+      {{ else }}
+        <p class="empty-state">{{ i18n "empty_posts" }}</p>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ partial "knowledge-graph.html" . }}
+{{ end }}

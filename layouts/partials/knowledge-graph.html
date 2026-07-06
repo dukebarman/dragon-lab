@@ -1,0 +1,216 @@
+{{ $context := . }}
+{{ $compact := false }}
+{{ if reflect.IsMap . }}
+  {{ with .page }}
+    {{ $context = . }}
+  {{ end }}
+  {{ $compact = .compact | default false }}
+{{ end }}
+{{ $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+{{ $graphPosts := first 4 $posts }}
+{{ $graphTags := first 4 site.Taxonomies.tags.ByCount }}
+{{ $tagCoords := slice
+  (dict "cx" 44 "cy" 88 "tx" 60 "ty" 78 "anchor" "start")
+  (dict "cx" 168 "cy" 62 "tx" 168 "ty" 42 "anchor" "middle")
+  (dict "cx" 386 "cy" 84 "tx" 402 "ty" 74 "anchor" "start")
+  (dict "cx" 142 "cy" 198 "tx" 142 "ty" 224 "anchor" "middle")
+}}
+{{ $postCoords := slice
+  (dict "cx" 280 "cy" 122 "tx" 280 "ty" 104 "anchor" "middle")
+  (dict "cx" 514 "cy" 142 "tx" 504 "ty" 126 "anchor" "end")
+  (dict "cx" 296 "cy" 256 "tx" 296 "ty" 284 "anchor" "middle")
+  (dict "cx" 58 "cy" 288 "tx" 78 "ty" 314 "anchor" "start")
+}}
+{{ $articleCoords := slice
+  (dict "cx" 72 "cy" 76 "tx" 72 "ty" 56 "anchor" "middle")
+  (dict "cx" 216 "cy" 60 "tx" 216 "ty" 40 "anchor" "middle")
+  (dict "cx" 390 "cy" 84 "tx" 390 "ty" 64 "anchor" "middle")
+  (dict "cx" 500 "cy" 168 "tx" 494 "ty" 152 "anchor" "end")
+  (dict "cx" 340 "cy" 286 "tx" 340 "ty" 312 "anchor" "middle")
+  (dict "cx" 112 "cy" 262 "tx" 112 "ty" 288 "anchor" "middle")
+}}
+{{ $graphScratch := newScratch }}
+{{ $baseURL := strings.TrimSuffix "/" site.BaseURL }}
+{{ $graphScratch.Set "postsBySlug" (dict) }}
+{{ range $posts }}
+  {{ $postsBySlug := $graphScratch.Get "postsBySlug" }}
+  {{ $postsBySlug = merge $postsBySlug (dict (.File.ContentBaseName | urlize) .) }}
+  {{ $graphScratch.Set "postsBySlug" $postsBySlug }}
+{{ end }}
+{{ $graphScratch.Set "articleEdges" (slice) }}
+{{ $graphScratch.Set "articleSeen" (dict) }}
+{{ $graphScratch.Set "articleLinked" (dict) }}
+{{ range $source := $posts }}
+  {{ $sourceSlug := $source.File.ContentBaseName | urlize }}
+  {{ $matches := findRE `(?:https?://[^\s\)"'>]+|/[^\s\)"'>]+)` ($source.RawContent | default "") }}
+  {{ range $match := $matches }}
+    {{ $normalized := $match }}
+    {{ if or (hasPrefix $match "http://") (hasPrefix $match "https://") }}
+      {{ if hasPrefix $match $baseURL }}
+        {{ $normalized = strings.TrimPrefix $baseURL $match }}
+      {{ else }}
+        {{ $normalized = "" }}
+      {{ end }}
+    {{ end }}
+    {{ if and $normalized (hasPrefix $normalized "/") (not (hasPrefix $normalized "/images/")) }}
+      {{ $normalized = replaceRE `[?#].*$` "" $normalized }}
+      {{ $normalized = replaceRE `/$` "" $normalized }}
+      {{ $normalized = replaceRE `^/(ru|en)` "" $normalized }}
+      {{ $normalized = replaceRE `^/posts` "" $normalized }}
+      {{ if and (ne $normalized "") (ne $normalized "/") }}
+        {{ $targetSlug := path.Base $normalized | urlize }}
+        {{ with index ($graphScratch.Get "postsBySlug") $targetSlug }}
+          {{ if ne $targetSlug $sourceSlug }}
+            {{ $edgeKey := printf "%s->%s" $sourceSlug $targetSlug }}
+            {{ if not (index ($graphScratch.Get "articleSeen") $edgeKey) }}
+              {{ $seen := $graphScratch.Get "articleSeen" }}
+              {{ $seen = merge $seen (dict $edgeKey true) }}
+              {{ $graphScratch.Set "articleSeen" $seen }}
+              {{ $edges := $graphScratch.Get "articleEdges" }}
+              {{ $edges = $edges | append (dict "from" $sourceSlug "to" $targetSlug) }}
+              {{ $graphScratch.Set "articleEdges" $edges }}
+              {{ $linked := $graphScratch.Get "articleLinked" }}
+              {{ $linked = merge $linked (dict $sourceSlug true $targetSlug true) }}
+              {{ $graphScratch.Set "articleLinked" $linked }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $articleEdges := $graphScratch.Get "articleEdges" }}
+{{ $articleLinked := $graphScratch.Get "articleLinked" }}
+{{ $articleGraphPosts := slice }}
+{{ range $posts }}
+  {{ $slug := .File.ContentBaseName | urlize }}
+  {{ if index $articleLinked $slug }}
+    {{ $articleGraphPosts = $articleGraphPosts | append . }}
+  {{ end }}
+{{ end }}
+{{ range $posts }}
+  {{ if ge (len $articleGraphPosts) (len $articleCoords) }}
+    {{ break }}
+  {{ end }}
+  {{ $slug := .File.ContentBaseName | urlize }}
+  {{ if not (index $articleLinked $slug) }}
+    {{ $articleGraphPosts = $articleGraphPosts | append . }}
+  {{ end }}
+{{ end }}
+{{ $articleGraphPosts = first (len $articleCoords) $articleGraphPosts }}
+{{ $articleDisplay := newScratch }}
+{{ $articleDisplay.Set "nodeMap" (dict) }}
+{{ $articleDisplay.Set "coordMap" (dict) }}
+{{ range $i, $post := $articleGraphPosts }}
+  {{ $slug := $post.File.ContentBaseName | urlize }}
+  {{ $nodeMap := $articleDisplay.Get "nodeMap" }}
+  {{ $nodeMap = merge $nodeMap (dict $slug true) }}
+  {{ $articleDisplay.Set "nodeMap" $nodeMap }}
+  {{ $coordMap := $articleDisplay.Get "coordMap" }}
+  {{ $coordMap = merge $coordMap (dict $slug (index $articleCoords $i)) }}
+  {{ $articleDisplay.Set "coordMap" $coordMap }}
+{{ end }}
+
+<section class="section">
+  <div class="cybergraph-grid{{ if $compact }} cybergraph-grid-compact{{ end }}">
+    {{ if not $compact }}
+      <article class="cybergraph-card">
+        <p class="cybergraph-intro">{{ i18n "graph_text" }}</p>
+      </article>
+    {{ end }}
+    <div class="cybergraph-map{{ if $compact }} cybergraph-map-compact{{ end }}" data-cybergraph data-cybergraph-mode="tags">
+      <div class="cybergraph-toolbar" role="group" aria-label="{{ i18n "graph_modes_aria" }}">
+        <button type="button" class="cybergraph-mode is-active" data-cybergraph-switch="tags" aria-pressed="true">
+          {{ i18n "graph_mode_tags" }}
+        </button>
+        <button type="button" class="cybergraph-mode" data-cybergraph-switch="posts" aria-pressed="false">
+          {{ i18n "graph_mode_posts" }}
+        </button>
+      </div>
+      <div class="cybergraph-tooltip" data-cybergraph-tooltip hidden></div>
+
+      <div class="cybergraph-pane" data-cybergraph-pane="tags">
+        <svg viewBox="0 0 560 360" class="cybergraph-svg" role="img" aria-label="{{ i18n "graph_aria" }}">
+          {{ range $i, $post := $graphPosts }}
+            {{ $postCoord := index $postCoords $i }}
+            {{ $postID := printf "post-%s" ($post.File.ContentBaseName | urlize) }}
+            {{ $postTagKeys := apply ($post.Params.tags | default (slice)) "urlize" "." }}
+            {{ range $j, $tag := $graphTags }}
+              {{ $tagKey := $tag.Page.Title | urlize }}
+              {{ if in $postTagKeys $tagKey }}
+                {{ $tagCoord := index $tagCoords $j }}
+                <path
+                  class="cybergraph-edge{{ if eq $i 0 }} is-emphasis{{ end }}"
+                  d="M{{ index $tagCoord `cx` }} {{ index $tagCoord `cy` }} L{{ index $postCoord `cx` }} {{ index $postCoord `cy` }}"
+                  data-edge-from="tag-{{ $tagKey }}"
+                  data-edge-to="{{ $postID }}"></path>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+
+          {{ range $i, $tag := $graphTags }}
+            {{ $coord := index $tagCoords $i }}
+            {{ $tagID := printf "tag-%s" ($tag.Page.Title | urlize) }}
+            {{ $tagLabel := printf "%s · %d" $tag.Page.Title $tag.Count }}
+            <a
+              href="{{ $tag.Page.Permalink }}"
+              class="cybergraph-link cybergraph-tag{{ if eq $i 0 }} active{{ end }}"
+              aria-label="{{ $tagLabel }}"
+              data-node-id="{{ $tagID }}"
+              data-tooltip="{{ $tagLabel }}">
+              <title>{{ $tag.Page.Title }}</title>
+              <circle cx="{{ index $coord `cx` }}" cy="{{ index $coord `cy` }}" r="{{ if or (eq $i 1) (eq $i 3) }}12{{ else }}8{{ end }}" />
+              <text x="{{ index $coord `tx` }}" y="{{ index $coord `ty` }}" text-anchor="{{ index $coord `anchor` }}">{{ $tag.Page.Title | truncate 14 }}</text>
+            </a>
+          {{ end }}
+
+          {{ range $i, $post := $graphPosts }}
+            {{ $coord := index $postCoords $i }}
+            {{ $postID := printf "post-%s" ($post.File.ContentBaseName | urlize) }}
+            <a
+              href="{{ $post.Permalink }}"
+              class="cybergraph-link cybergraph-post{{ if eq $i 0 }} active{{ end }}"
+              aria-label="{{ $post.Title }}"
+              data-node-id="{{ $postID }}"
+              data-tooltip="{{ $post.Title }}">
+              <title>{{ $post.Title }}</title>
+              <circle cx="{{ index $coord `cx` }}" cy="{{ index $coord `cy` }}" r="{{ if or (eq $i 1) (eq $i 2) }}10{{ else }}8{{ end }}" />
+              <text x="{{ index $coord `tx` }}" y="{{ index $coord `ty` }}" text-anchor="{{ index $coord `anchor` }}">{{ $post.Title | truncate 18 }}</text>
+            </a>
+          {{ end }}
+        </svg>
+      </div>
+
+      <div class="cybergraph-pane" data-cybergraph-pane="posts" hidden>
+        <svg viewBox="0 0 560 360" class="cybergraph-svg" role="img" aria-label="{{ i18n "graph_posts_aria" }}">
+          {{ range $articleEdges }}
+            {{ if and (index ($articleDisplay.Get "nodeMap") .from) (index ($articleDisplay.Get "nodeMap") .to) }}
+              {{ $fromCoord := index ($articleDisplay.Get "coordMap") .from }}
+              {{ $toCoord := index ($articleDisplay.Get "coordMap") .to }}
+              <path
+                class="cybergraph-edge cybergraph-edge-posts"
+                d="M{{ index $fromCoord `cx` }} {{ index $fromCoord `cy` }} L{{ index $toCoord `cx` }} {{ index $toCoord `cy` }}"
+                data-edge-from="post-{{ .from }}"
+                data-edge-to="post-{{ .to }}"></path>
+            {{ end }}
+          {{ end }}
+
+          {{ range $i, $post := $articleGraphPosts }}
+            {{ $slug := $post.File.ContentBaseName | urlize }}
+            {{ $coord := index $articleCoords $i }}
+            <a
+              href="{{ $post.Permalink }}"
+              class="cybergraph-link cybergraph-post cybergraph-post-only{{ if and (gt (len $articleEdges) 0) (index $articleLinked $slug) }} active{{ end }}"
+              aria-label="{{ $post.Title }}"
+              data-node-id="post-{{ $slug }}"
+              data-tooltip="{{ $post.Title }}">
+              <title>{{ $post.Title }}</title>
+              <circle cx="{{ index $coord `cx` }}" cy="{{ index $coord `cy` }}" r="{{ if index $articleLinked $slug }}10{{ else }}7{{ end }}" />
+              <text x="{{ index $coord `tx` }}" y="{{ index $coord `ty` }}" text-anchor="{{ index $coord `anchor` }}">{{ $post.Title | truncate 18 }}</text>
+            </a>
+          {{ end }}
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}" dir="ltr">
+  <head>
+    {{ partial "head.html" . }}
+    {{ partial "analytics-head.html" . }}
+  </head>
+  <body class="page-{{ .Kind }}{{ with .Section }} section-{{ . }}{{ end }}">
+    {{ partial "analytics-body.html" . }}
+    <a class="skip-link" href="#main-content">{{ i18n "skip_to_content" }}</a>
+    <div class="site-shell">
+      {{ partial "header.html" . }}
+      <main class="site-main" id="main-content">
+        {{ block "main" . }}{{ end }}
+      </main>
+      {{ partial "footer.html" . }}
+    </div>
+    {{ with resources.Get "js/main.js" | minify | fingerprint }}
+      <script src="{{ cond hugo.IsServer .RelPermalink .Permalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+    {{ end }}
+  </body>
+</html>

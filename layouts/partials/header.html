@@ -1,0 +1,48 @@
+<header class="topbar">
+  {{ $brandName := site.Params.brandName | default site.Params.author | default site.Title }}
+  {{ $brandTagline := site.Params.brandTagline | default (i18n "brand_tagline") }}
+  <a class="brand" href="{{ site.Home.Permalink }}">
+    <span class="brand-mark"></span>
+    <span class="brand-copy">
+      <strong>{{ $brandName }}</strong>
+      <small>{{ $brandTagline }}</small>
+    </span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-nav"
+    data-nav-toggle>
+    {{ i18n "menu_label" }}
+  </button>
+
+  <div class="topbar-controls" id="site-nav" data-nav-panel>
+    <nav class="topnav" aria-label="{{ i18n `nav_primary` }}">
+      {{ range site.Menus.main }}
+        {{ $label := .Name }}
+        {{ $menuURL := .URL }}
+        {{ with .Page }}
+          {{ $menuURL = .Permalink }}
+        {{ else }}
+          {{ $menuURL = partial "absolute-lang-url.html" .URL }}
+        {{ end }}
+        {{ with .Identifier }}
+          {{ with i18n . }}
+            {{ $label = . }}
+          {{ end }}
+        {{ end }}
+        <a href="{{ $menuURL }}" class="{{ if or ($.IsMenuCurrent `main` .) ($.HasMenuCurrent `main` .) }}is-active{{ end }}">
+          {{ $label }}
+        </a>
+      {{ end }}
+      {{ with site.GetPage "section" "posts" }}
+        {{ with .OutputFormats.Get "RSS" }}
+          <a href="{{ .Permalink }}">{{ i18n "nav_follow" }}</a>
+        {{ end }}
+      {{ end }}
+    </nav>
+    {{ partial "language-switcher.html" . }}
+  </div>
+</header>

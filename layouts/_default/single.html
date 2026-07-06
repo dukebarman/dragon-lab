@@ -1,0 +1,146 @@
+{{ define "main" }}
+  {{ $allPosts := where site.RegularPages "Section" "posts" }}
+  {{ $recent := (where $allPosts "RelPermalink" "!=" .RelPermalink).ByDate.Reverse }}
+  {{ $related := $recent }}
+  {{ with .Params.tags }}
+    {{ $tagged := where $recent "Params.tags" "intersect" . }}
+    {{ if gt (len $tagged) 0 }}
+      {{ $related = $tagged.ByDate.Reverse }}
+    {{ end }}
+  {{ end }}
+  {{ $related = first 3 $related }}
+  {{ $author := .Params.author | default site.Params.author | default site.Title }}
+  {{ $authorURL := .Params.authorURL | default site.Params.authorURL }}
+  {{ $authorPermalink := "" }}
+  {{ with $authorURL }}
+    {{ $authorPermalink = partial "absolute-lang-url.html" . }}
+  {{ end }}
+  {{ $coverURL := "" }}
+  {{ with .Params.cover }}
+    {{ $coverURL = partial "image-url.html" (dict "page" $ "src" .) }}
+  {{ end }}
+  {{ $coverAlt := .Params.coverAlt | default .Title }}
+  {{ $coverCaption := .Params.coverCaption }}
+
+  <div class="article-layout">
+    <article class="essay iv-article" id="post-top" data-iv-article="true">
+      <header class="essay-header iv-header">
+        <p class="eyebrow">
+          {{ i18n "post_kicker" }} / {{ upper .Lang }} /
+          <time class="iv-published" datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}" data-iv-published>
+            {{ .Date | time.Format ":date_long" }}
+          </time>
+        </p>
+        <h1 class="iv-title">{{ .Title }}</h1>
+        {{ with .Description }}
+          <p class="essay-dek iv-description">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      {{ with $coverURL }}
+        <figure class="post-cover iv-cover" data-iv-cover>
+          <img src="{{ . }}" alt="{{ $coverAlt }}" loading="eager" />
+          {{ with $coverCaption }}
+            <figcaption>{{ . | markdownify }}</figcaption>
+          {{ end }}
+        </figure>
+      {{ end }}
+
+      <div class="essay-body iv-content" data-iv-content>
+        {{ .Content }}
+      </div>
+
+      {{ with .Params.tags }}
+        <ul class="tag-row" data-iv-remove="true">
+          {{ range . }}
+            <li>
+              <a href="{{ (printf `tags/%s/` (. | urlize)) | absLangURL }}">{{ . }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+
+      {{ partial "share-links.html" . }}
+
+      {{ if gt (len $related) 0 }}
+        <section class="backlinks" data-iv-remove="true" data-iv-related>
+          <div class="section-header">
+            <p class="section-kicker">{{ i18n "related_kicker" }}</p>
+          </div>
+          <div class="timeline-list">
+            {{ range $related }}
+              {{ partial "post-card.html" . }}
+            {{ end }}
+          </div>
+        </section>
+      {{ end }}
+    </article>
+
+    <aside class="article-rail" data-article-rail data-iv-remove="true" data-iv-rail>
+      <section class="rail-card article-meta-card">
+        <div class="article-meta-head">
+          <p class="section-kicker">{{ i18n "post_meta_title" }}</p>
+          <button
+            class="button button-secondary article-rail-icon-button article-rail-close-button"
+            type="button"
+            data-article-rail-toggle="hide"
+            aria-expanded="true"
+            aria-label="{{ i18n `article_rail_hide` }}"
+            title="{{ i18n `article_rail_hide` }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 7 L17 17" />
+              <path d="M17 7 L7 17" />
+            </svg>
+          </button>
+        </div>
+        <ul class="meta-stack">
+          <li>
+            {{ i18n "meta_author" }}:
+            {{ with $authorPermalink }}
+              <a class="iv-author" href="{{ . }}" data-iv-author>{{ $author }}</a>
+            {{ else }}
+              <span class="iv-author" data-iv-author>{{ $author }}</span>
+            {{ end }}
+          </li>
+          <li>{{ i18n "meta_published" }}: {{ .Date | time.Format ":date_long" }}</li>
+          <li>{{ i18n "meta_reading" }}: {{ .ReadingTime }} {{ i18n "minutes_short" }}</li>
+          <li>{{ i18n "meta_language" }}: {{ upper .Lang }}</li>
+        </ul>
+      </section>
+
+      {{ if in .TableOfContents "<li>" }}
+        <section class="rail-card">
+          <p class="section-kicker">{{ i18n "toc_title" }}</p>
+          <nav class="toc-nav">
+            {{ .TableOfContents }}
+          </nav>
+        </section>
+      {{ end }}
+
+      {{ partial "article-graph.html" (dict "page" . "related" $related) }}
+    </aside>
+
+    <div class="article-rail-reopen" data-iv-remove="true">
+      <button
+        class="button button-secondary article-rail-icon-button article-rail-toggle-reopen"
+        type="button"
+        data-article-rail-toggle="show"
+        aria-expanded="false"
+        aria-label="{{ i18n `article_rail_show` }}"
+        title="{{ i18n `article_rail_show` }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 7 L12 5 L19 9 L17 17 L10 19 L5 13 Z" />
+          <path d="M12 5 L10 19" />
+          <path d="M5 7 L17 17" />
+          <path d="M19 9 L5 13" />
+          <circle cx="12" cy="5" r="1.6" />
+          <circle cx="5" cy="7" r="1.4" />
+          <circle cx="19" cy="9" r="1.4" />
+          <circle cx="5" cy="13" r="1.4" />
+          <circle cx="17" cy="17" r="1.4" />
+          <circle cx="10" cy="19" r="1.4" />
+        </svg>
+      </button>
+    </div>
+  </div>
+{{ end }}

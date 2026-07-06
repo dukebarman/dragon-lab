@@ -1,0 +1,98 @@
+{{ define "main" }}
+  {{ $posts := first 3 ((where site.RegularPages "Section" "posts").ByDate.Reverse) }}
+  {{ $socialLinks := site.Params.social | default (slice) }}
+  {{ $aboutSocialNames := site.Params.aboutSocial | default (slice) }}
+  {{ $aboutSocialLinks := slice }}
+  {{ if gt (len $aboutSocialNames) 0 }}
+    {{ range $name := $aboutSocialNames }}
+      {{ $targetName := lower (printf "%v" $name) }}
+      {{ range $socialLinks }}
+        {{ if eq (lower (printf "%v" (index . "name"))) $targetName }}
+          {{ $aboutSocialLinks = $aboutSocialLinks | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ else }}
+    {{ $aboutSocialLinks = first 5 $socialLinks }}
+  {{ end }}
+  {{ $aboutImage := site.Params.aboutImage | default (print "images/" "example-avatar.jpg") }}
+  {{ $aboutImagePath := replaceRE `^/` `` $aboutImage }}
+  {{ $aboutImageAlt := .Params.imageAlt | default site.Params.aboutImageAlt | default .Title }}
+  <section class="about-hero">
+    <div class="about-visual">
+      <div class="hero-frame about-frame">
+        <img src="{{ cond hugo.IsServer ($aboutImagePath | relURL) ($aboutImagePath | absURL) }}" alt="{{ $aboutImageAlt }}" class="about-avatar" />
+      </div>
+    </div>
+    <div class="about-copy">
+      <h1>{{ .Title }}</h1>
+      <p class="about-role">{{ i18n "about_role" }}</p>
+      <p>
+        {{ with .Description }}
+          {{ . }}
+        {{ else }}
+          {{ i18n "about_fallback" }}
+        {{ end }}
+      </p>
+      {{ partial "social-icons.html" (dict "links" $aboutSocialLinks "class" "about-social-links") }}
+    </div>
+  </section>
+
+  <section class="section">
+    <article class="about-story essay-body">
+      {{ if .Content }}
+        {{ .Content }}
+      {{ else }}
+        <div class="section-header">
+          <p class="section-kicker">{{ i18n "about_intro_kicker" }}</p>
+          <h2>{{ i18n "about_intro_title" }}</h2>
+        </div>
+        <p>{{ i18n "about_intro_p1" }}</p>
+        <p>{{ i18n "about_intro_p2" }}</p>
+        <p>{{ i18n "about_intro_p3" }}</p>
+
+        <div class="section-header about-story-section">
+          <p class="section-kicker">{{ i18n "focus_kicker" }}</p>
+          <h2>{{ i18n "focus_title" }}</h2>
+        </div>
+        <p>{{ i18n "about_focus_text" }}</p>
+        <ul class="detail-list about-detail-list">
+          <li>{{ i18n "focus_item_1" }}</li>
+          <li>{{ i18n "focus_item_2" }}</li>
+          <li>{{ i18n "focus_item_3" }}</li>
+        </ul>
+
+        <div class="section-header about-story-section">
+          <p class="section-kicker">{{ i18n "about_archive_kicker" }}</p>
+          <h2>{{ i18n "about_archive_title" }}</h2>
+        </div>
+        <p>{{ i18n "about_archive_p1" }}</p>
+        <p>{{ i18n "about_archive_p2" }}</p>
+      {{ end }}
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <p class="section-kicker">{{ i18n "recent_work_kicker" }}</p>
+    </div>
+    <div class="timeline-list">
+      {{ range $posts }}
+        <article class="timeline-item">
+          <span class="timeline-mark"></span>
+          <div class="timeline-copy">
+            <h3><a class="post-link" href="{{ .Permalink }}">{{ .Title }}</a></h3>
+            <p class="meta-line timeline-meta">{{ upper .Lang }} / {{ .Date | time.Format ":date_long" }}</p>
+            <p>
+              {{ with .Description }}
+                {{ . }}
+              {{ else }}
+                {{ .Plain | htmlUnescape | truncate 200 }}
+              {{ end }}
+            </p>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

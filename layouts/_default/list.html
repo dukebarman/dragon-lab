@@ -1,0 +1,36 @@
+{{ define "main" }}
+  {{ $pages := .Pages.ByDate.Reverse }}
+  {{ $postsSection := site.GetPage "section" "posts" }}
+  {{ $actions := slice (dict "class" "button-primary" "href" site.Home.Permalink "label" (i18n "back_home")) }}
+  {{ with $postsSection }}
+    {{ with .OutputFormats.Get "RSS" }}
+      {{ $actions = $actions | append (dict "class" "button-secondary" "href" .Permalink "label" (i18n "follow_rss")) }}
+    {{ end }}
+  {{ end }}
+  {{ $text := .Description | default (i18n "list_fallback") }}
+  {{ $title := .Title }}
+  {{ if eq .Section "posts" }}
+    {{ $title = "" }}
+  {{ end }}
+  {{ partial "page-hero.html" (dict
+    "title" $title
+    "kicker" (i18n "archive_kicker")
+    "text" $text
+    "actions" $actions
+    "show_caption" true
+    "caption_1" (i18n "list_caption_1")
+    "caption_2" (i18n "list_caption_2")
+  ) }}
+
+  <section class="section">
+    <div class="post-grid">
+      {{ range $pages }}
+        {{ partial "post-card.html" . }}
+      {{ else }}
+        <p class="empty-state">{{ i18n "empty_posts" }}</p>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ partial "knowledge-graph.html" (dict "page" . "compact" true) }}
+{{ end }}

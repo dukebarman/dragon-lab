@@ -1,0 +1,13 @@
+name = "dragon-lab"
+license = "Apache-2.0"
+licenselink = "https://www.apache.org/licenses/LICENSE-2.0"
+description = "Multilingual editorial Hugo theme for technical blogs, research notes, and connected long-form writing."
+homepage = "https://github.com/dukebarman/dragon-lab"
+demosite = "https://dukebarman.github.io/dragon-lab/"
+tags = ["blog", "multilingual", "dark", "technical", "responsive"]
+features = ["multilingual", "responsive", "technical writing", "archive graph", "article rail"]
+min_version = "0.146.0"
+
+[author]
+  name = "Boris dukeBarman Ryutin"
+  homepage = "https://dukebarman.pro"

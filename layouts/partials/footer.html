@@ -1,0 +1,45 @@
+<footer class="site-footer">
+  {{ $postsSection := site.GetPage "section" "posts" }}
+  {{ $authorName := site.Params.author | default site.Title }}
+  {{ $footer := site.Params.footer | default dict }}
+  {{ $showCopyright := true }}
+  {{ $showHugoAttribution := true }}
+  {{ $showThemeAttribution := true }}
+  {{ with $footer }}
+    {{ if isset . "showcopyright" }}{{ $showCopyright = .showCopyright }}{{ end }}
+    {{ if isset . "showhugoattribution" }}{{ $showHugoAttribution = .showHugoAttribution }}{{ end }}
+    {{ if isset . "showthemeattribution" }}{{ $showThemeAttribution = .showThemeAttribution }}{{ end }}
+  {{ end }}
+  <div>
+    <p class="footer-copy">
+      {{ if $showCopyright }}
+        {{ with $authorName }}
+          {{ now.Year }} &copy; <a href="{{ site.Home.Permalink }}">{{ . }}</a>.
+        {{ else }}
+          &copy; {{ now.Year }}.
+        {{ end }}
+        {{ i18n "footer_rights" }}
+      {{ end }}
+      {{ if $showHugoAttribution }}
+        {{ i18n "footer_published_with" }}
+        <a href="https://gohugo.io/" rel="noopener noreferrer">Hugo</a>.
+      {{ end }}
+      {{ if $showThemeAttribution }}
+        {{ $themeName := $footer.themeName | default "Dragon Lab" }}
+        {{ $themeURL := $footer.themeURL | default "https://github.com/dukebarman/dragon-lab" }}
+        {{ $themeAuthorName := $footer.themeAuthorName | default "dukeBarman" }}
+        {{ $themeAuthorURL := $footer.themeAuthorURL | default "https://dukebarman.pro" }}
+        {{ $themeLink := printf `<a href="%s" rel="noopener noreferrer">%s</a>` ($themeURL | safeURL) ($themeName | htmlEscape) }}
+        {{ $themeAuthorLink := printf `<a href="%s" rel="noopener noreferrer">%s</a>` ($themeAuthorURL | safeURL) ($themeAuthorName | htmlEscape) }}
+        {{ i18n "footer_theme_attribution" (dict "theme" $themeLink "author" $themeAuthorLink) | safeHTML }}
+      {{ end }}
+    </p>
+  </div>
+  {{ $socialLinks := site.Params.social | default (slice) }}
+  {{ with $postsSection }}
+    {{ with .OutputFormats.Get "RSS" }}
+      {{ $socialLinks = $socialLinks | append (dict "name" "rss" "url" .Permalink) }}
+    {{ end }}
+  {{ end }}
+  {{ partial "social-icons.html" (dict "links" $socialLinks "class" "footer-links") }}
+</footer>

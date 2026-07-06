@@ -1,0 +1,308 @@
+[brand_tagline]
+other = "field notes / dragon lab"
+
+[menu_label]
+other = "Menu"
+
+[language_switcher]
+other = "Language switcher"
+
+[nav_archive]
+other = "Archive"
+
+[nav_about]
+other = "About"
+
+[nav_tags]
+other = "Tags"
+
+[nav_follow]
+other = "RSS"
+
+[nav_primary]
+other = "Primary navigation"
+
+[skip_to_content]
+other = "Skip to content"
+
+[home_eyebrow]
+other = "Field notes from a dragon researcher"
+
+[home_title_prefix]
+other = "Essays for curious minds who like to understand"
+
+[home_title_accent]
+other = "devices"
+
+[home_title_suffix]
+other = "and find connections."
+
+[home_title_html]
+other = "Essays for curious minds who like to understand <span>devices</span> and find connections."
+
+[home_text]
+other = "A fictional dragon researcher writes about patient experiments, old instruments, and the small technical clues that explain how things work."
+
+[home_cta_archive]
+other = "Read the archive"
+
+[home_cta_about]
+other = "About the dragon"
+
+[home_caption_1]
+other = "dragon signal"
+
+[home_caption_2]
+other = "archive online"
+
+[archive_kicker]
+other = "Archive"
+
+[archive_title]
+other = "Latest field notes"
+
+[archive_text]
+other = "Longreads and notes in one stream, with enough structure to feel like a research notebook instead of a feed."
+
+[archive_browse]
+other = "To archive"
+
+[empty_posts]
+other = "No posts are published in this section yet."
+
+[author_kicker]
+other = "About the dragon"
+
+[author_title]
+other = "Research-led writing from a dragon who studies technology one careful clue at a time."
+
+[author_fallback]
+other = "This site is where technical writing, connected notes, and curious experiments meet in one place."
+
+[focus_kicker]
+other = "Focus"
+
+[focus_title]
+other = "Areas of work"
+
+[focus_item_1]
+other = "Careful experiments with devices, protocols, and small instruments"
+
+[focus_item_2]
+other = "Readable maps that explain how one component talks to another"
+
+[focus_item_3]
+other = "Technical essays that turn obscure behavior into useful notes"
+
+[empty_tags]
+other = "No tags are available yet."
+
+[graph_kicker]
+other = "Knowledge graph"
+
+[graph_text]
+other = "Archive map: switch modes and jump through tags or direct links between essays."
+
+[graph_aria]
+other = "Interactive knowledge graph with links to archive tags and essays"
+
+[graph_modes_aria]
+other = "Knowledge graph modes"
+
+[graph_mode_tags]
+other = "Tags + essays"
+
+[graph_mode_posts]
+other = "Essays only"
+
+[graph_posts_aria]
+other = "Graph of internal links between archive essays"
+
+[article_graph_kicker]
+other = "Graph"
+
+[article_graph_aria]
+other = "Local graph for the current essay"
+
+[article_graph_legend_1]
+other = "current essay"
+
+[article_graph_legend_2]
+other = "linked essay"
+
+[article_graph_legend_3]
+other = "tag"
+
+[article_rail_hide]
+other = "Hide sidebar"
+
+[article_rail_show]
+other = "Show sidebar"
+
+[follow_kicker]
+other = "Follow"
+
+[follow_title]
+other = "Read the longread, then keep the archive close."
+
+[follow_text]
+other = "Subscribe by RSS or use the public profile links when you want the fastest path back into the archive."
+
+[follow_rss]
+other = "Subscribe via RSS"
+
+[follow_social]
+other = "Open social profile"
+
+[list_fallback]
+other = "A direct view over the published archive in the current language."
+
+[list_caption_1]
+other = "sorted by date"
+
+[list_caption_2]
+other = "language-aware archive"
+
+[back_home]
+other = "Back to home"
+
+[post_kicker]
+other = "Essay"
+
+[related_kicker]
+other = "Nearby nodes"
+
+[related_title]
+other = "More from the archive"
+
+[share_aria]
+other = "Buttons for sharing this essay on social networks and by email"
+
+[share_prompt]
+other = "Share this post on:"
+
+[share_x]
+other = "Share on X"
+
+[share_bluesky]
+other = "Share on Bluesky"
+
+[share_vk]
+other = "Share on VK"
+
+[share_linkedin]
+other = "Share on LinkedIn"
+
+[share_reddit]
+other = "Share on Reddit"
+
+[share_telegram]
+other = "Share on Telegram"
+
+[share_mastodon]
+other = "Share on Mastodon"
+
+[share_hn]
+other = "Share on Hacker News"
+
+[share_email]
+other = "Share by email"
+
+[back_to_top]
+other = "Back to top"
+
+[post_meta_title]
+other = "Post meta"
+
+[meta_author]
+other = "Author"
+
+[meta_published]
+other = "Published"
+
+[meta_reading]
+other = "Reading time"
+
+[meta_language]
+other = "Language"
+
+[minutes_short]
+other = "min"
+
+[toc_title]
+other = "On this page"
+
+[taxonomy_kicker]
+other = "Taxonomy"
+
+[taxonomy_text]
+other = "Entries connected through the same topic cluster."
+
+[terms_text]
+other = "A navigable map of archive topics."
+
+[entries_label]
+other = "entries"
+
+[about_kicker]
+other = "About"
+
+[about_fallback]
+other = "Technology research, systems thinking, and writing meant to stay useful."
+
+[about_role]
+other = "Fictional dragon researcher and keeper of practical notes"
+
+[about_intro_kicker]
+other = "Introduction"
+
+[about_intro_title]
+other = "Don Oren studies strange devices and explains difficult things clearly."
+
+[about_intro_p1]
+other = "Don Oren Estorsky is a fictional dragon researcher who keeps a warm lamp, a crowded workbench, and a habit of writing down every useful clue before it disappears."
+
+[about_intro_p2]
+other = "The archive follows instruments, protocols, interfaces, and the small design decisions that make technology feel either obvious or mysterious."
+
+[about_intro_p3]
+other = "Each note is written to be revisited: part lab journal, part map, and part reminder that patient observation usually beats a louder tool."
+
+[about_focus_text]
+other = "These are the main areas Don Oren spends the most time on in the sample archive:"
+
+[about_archive_kicker]
+other = "Archive"
+
+[about_archive_title]
+other = "This demo is built as a working notebook, not a stream of disposable posts."
+
+[about_archive_p1]
+other = "It collects long-form breakdowns, observations, and technical sketches around fictional research projects. The archive is meant to be revisited, cross-linked, and used over time."
+
+[about_archive_p2]
+other = "If you prefer navigating by topic, use the tags and graphs. If you want a linear entry point, start with the newest notes below."
+
+[recent_work_kicker]
+other = "New posts in the archive"
+
+[footer_rights]
+other = "All rights reserved."
+
+[footer_published_with]
+other = "Published with"
+
+[footer_theme]
+other = "Theme"
+
+[footer_by]
+other = "by"
+
+[footer_theme_attribution]
+other = "Theme {{ .theme }} by {{ .author }}."
+
+[not_found_title]
+other = "The page drifted off the map."
+
+[not_found_text]
+other = "The link is outdated or the route has changed. Use the archive to pick up the thread again."

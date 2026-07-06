@@ -1,0 +1,17 @@
+{{- $src := .Destination -}}
+{{- $url := urls.Parse $src -}}
+{{- if and (not $url.IsAbs) (not (hasPrefix $src "/")) -}}
+  {{- with .Page.Resources.GetMatch $src -}}
+    {{- $src = .RelPermalink -}}
+  {{- else -}}
+    {{- $src = $src | relURL -}}
+  {{- end -}}
+{{- end -}}
+{{- $alt := .Text | plainify -}}
+{{- $caption := .Title | markdownify -}}
+<figure class="content-figure iv-figure">
+  <img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="lazy" />
+  {{- with $caption }}
+    <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>

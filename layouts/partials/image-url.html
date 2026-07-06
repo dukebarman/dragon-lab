@@ -1,0 +1,18 @@
+{{- $page := .page -}}
+{{- $src := .src | default "" -}}
+{{- $result := "" -}}
+{{- if $src -}}
+  {{- $url := urls.Parse $src -}}
+  {{- if $url.IsAbs -}}
+    {{- $result = $src -}}
+  {{- else if hasPrefix $src "/" -}}
+    {{- $result = (replaceRE "^/" "" $src) | absURL -}}
+  {{- else -}}
+    {{- with $page.Resources.GetMatch $src -}}
+      {{- $result = .Permalink -}}
+    {{- else -}}
+      {{- $result = $src | absURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}
