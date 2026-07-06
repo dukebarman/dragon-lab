@@ -359,14 +359,6 @@ input {
   line-height: 1.02;
 }
 
-.about-role {
-  margin: 4px 0 0;
-  color: var(--text-soft);
-  font-size: 0.96rem;
-  line-height: 1.45;
-  max-width: 34ch;
-}
-
 .about-copy > p {
   margin: 0;
 }

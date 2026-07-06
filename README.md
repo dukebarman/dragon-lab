@@ -122,9 +122,6 @@ Dragon Lab's about layout uses the `about` content page for the page title, fron
 To customize the about page for a real site, create site-level i18n files such as `i18n/en.toml` and `i18n/ru.toml`, then override these keys:
 
 ```toml
-[about_role]
-other = "Your role or short byline"
-
 [about_fallback]
 other = "Short intro shown when the about page has no description."
 

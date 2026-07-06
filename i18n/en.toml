@@ -250,9 +250,6 @@ other = "About"
 [about_fallback]
 other = "Technology research, systems thinking, and writing meant to stay useful."
 
-[about_role]
-other = "Fictional dragon researcher and keeper of practical notes"
-
 [about_intro_kicker]
 other = "Introduction"
 
