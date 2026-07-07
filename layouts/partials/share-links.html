@@ -8,7 +8,7 @@
     <div class="share-actions" aria-label="{{ i18n `share_aria` }}">
       <a
         class="share-chip"
-        href="https://x.com/intent/tweet?text={{ $title | urlquery }}&url={{ $url | urlquery }}"
+        href="https://x.com/intent/tweet?text={{ $title | urlquery }}&amp;url={{ $url | urlquery }}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="{{ i18n `share_x` }}"
@@ -33,7 +33,7 @@
       </a>
       <a
         class="share-chip"
-        href="https://vk.com/share.php?url={{ $url | urlquery }}&title={{ $title | urlquery }}"
+        href="https://vk.com/share.php?url={{ $url | urlquery }}&amp;title={{ $title | urlquery }}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="{{ i18n `share_vk` }}"
@@ -61,7 +61,7 @@
       </a>
       <a
         class="share-chip"
-        href="https://www.reddit.com/submit?url={{ $url | urlquery }}&title={{ $title | urlquery }}"
+        href="https://www.reddit.com/submit?url={{ $url | urlquery }}&amp;title={{ $title | urlquery }}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="{{ i18n `share_reddit` }}"
@@ -79,7 +79,7 @@
       </a>
       <a
         class="share-chip"
-        href="https://t.me/share/url?url={{ $url | urlquery }}&text={{ $title | urlquery }}"
+        href="https://t.me/share/url?url={{ $url | urlquery }}&amp;text={{ $title | urlquery }}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="{{ i18n `share_telegram` }}"
@@ -104,7 +104,7 @@
       </a>
       <a
         class="share-chip"
-        href="https://news.ycombinator.com/submitlink?u={{ $url | urlquery }}&t={{ $title | urlquery }}"
+        href="https://news.ycombinator.com/submitlink?u={{ $url | urlquery }}&amp;t={{ $title | urlquery }}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="{{ i18n `share_hn` }}"
@@ -116,7 +116,7 @@
       </a>
       <a
         class="share-chip"
-        href="mailto:?subject={{ $title | urlquery }}&body={{ $shareText | urlquery }}"
+        href="mailto:?subject={{ $title | urlquery }}&amp;body={{ $shareText | urlquery }}"
         aria-label="{{ i18n `share_email` }}"
         title="{{ i18n `share_email` }}">
         <svg viewBox="0 0 24 24" aria-hidden="true">
