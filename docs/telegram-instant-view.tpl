@@ -15,6 +15,8 @@ $body: ($article//*[@data-iv-content])[1]
 @remove: //style
 @remove: //noscript
 @remove: //*[contains(@data-iv-remove, "true")]
+@split_parent: $body//p/figure
+@split_parent: $body//p/img
 
 title: ($article//h1[has-class("iv-title")])[1]
 author: (//meta[@property="article:author"]/@content)[1]

@@ -237,13 +237,26 @@ Dragon Lab renders posts with stable Instant View selectors, metadata, and media
 - Code fences render as `<pre data-language="...">` blocks.
 - Post pages include Open Graph article metadata and JSON-LD `BlogPosting` data.
 
-Telegram Instant View still has to be configured per domain in Telegram's editor. Use `docs/telegram-instant-view.tpl` as a starting point, then validate several live post URLs in the official tools:
+Telegram Instant View still has to be configured per live domain in Telegram's editor. Deploying this theme only adds IV-friendly markup to your pages; Telegram will not use it until you save a template for the domain.
+
+To enable Instant View for a site:
+
+1. Open the Template editor: <https://instantview.telegram.org/templates>.
+2. Log in with Telegram and enter a real production post URL, for example `https://example.org/ru/posts/example-post/`.
+3. Create or open the template for the root domain, for example `example.org`, not a local preview host.
+4. Paste the contents of `docs/telegram-instant-view.tpl` into the editor. Keep `~version: "2.1"` as the first non-empty line; otherwise Telegram may treat the template as the old IV 1.0 format.
+5. Adjust the `?path` rule if your article URLs do not live under `/posts/`. The bundled rule covers `/posts/...` and language-prefixed paths such as `/ru/posts/...` and `/en/posts/...`.
+6. Preview and save the template. The result must include at least `title` and `body`; without both, Telegram will report that no Instant View is available.
+7. Test several live posts before submitting the template: one post with a cover, one without a cover, one with images and captions, one with code blocks, and each language branch used by the site.
+8. When the previews look correct, enable Track Changes for enough representative posts and submit the template for review from the Telegram editor.
+
+Useful official references:
 
 - Documentation: <https://instantview.telegram.org/docs>
 - Checklist: <https://instantview.telegram.org/checklist>
 - Template editor: <https://instantview.telegram.org/templates>
 
-Recommended checks before submitting a template: one post with a cover, one without a cover, one with images and captions, one with code blocks, and each language branch used by the site.
+If Telegram shows `Version 1.0 is outdated`, the editor is not using a saved template whose first non-empty line is `~version: "2.1"`. If it shows `No Instant View available for this page`, check that the URL matches the `?path` rule and that the page exposes `article[data-iv-article]`, `.iv-title`, and `[data-iv-content]`. If Telegram fails with `Element <img> is not supported in <p>`, make sure your saved template includes the bundled `@split_parent` rules; they normalize old Markdown output where media was accidentally rendered inside a paragraph.
 
 ## License
 
