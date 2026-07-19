@@ -236,6 +236,7 @@ Dragon Lab renders posts with stable Instant View selectors, metadata, and media
 - Markdown images are rendered as figures with optional captions.
 - Code fences render as `<pre data-language="...">` blocks.
 - Post pages include Open Graph article metadata and JSON-LD `BlogPosting` data.
+- Link preview images fall back from an explicit post cover to the first image in the article body, then to the site's Open Graph image.
 
 Telegram Instant View still has to be configured per live domain in Telegram's editor. Deploying this theme only adds IV-friendly markup to your pages; Telegram will not use it until you save a template for the domain.
 
@@ -248,7 +249,7 @@ To enable Instant View for a site:
 5. Adjust the `?path` rule if your article URLs do not live under `/posts/`. The bundled rule covers `/posts/...` and language-prefixed paths such as `/ru/posts/...` and `/en/posts/...`.
 6. Preview and save the template. The result must include at least `title` and `body`; without both, Telegram will report that no Instant View is available.
 7. Test several live posts before submitting the template: one post with a cover, one without a cover, one with images and captions, one with code blocks, and each language branch used by the site.
-8. When the previews look correct, enable Track Changes for enough representative posts and submit the template for review from the Telegram editor.
+8. When the previews look correct, enable Track Changes for 10-15 representative posts and submit the template for review from the Telegram editor.
 
 Useful official references:
 

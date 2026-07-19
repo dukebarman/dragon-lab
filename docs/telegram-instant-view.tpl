@@ -23,6 +23,11 @@ author: (//meta[@property="article:author"]/@content)[1]
 author_url: (//meta[@property="article:author:url"]/@content)[1]
 description: (//meta[@name="description"]/@content)[1]
 site_name: (//meta[@property="og:site_name"]/@content)[1]
+# Instant View properties keep their first non-empty value. Prefer an explicit
+# cover, then the first image in the article body, and finally the site's
+# Open Graph fallback image.
+image_url: ($article//figure[@data-iv-cover]//img/@src)[1]
+image_url: ($body//img/@src)[1]
 image_url: (//meta[@property="og:image"]/@content)[1]
 cover: ($article//figure[@data-iv-cover])[1]
 @datetime(0, "en-US", "yyyy-MM-dd'T'HH:mm:ssXXX"): ($article//time[@data-iv-published]/@datetime)[1]
